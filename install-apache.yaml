@@ -1,6 +1,14 @@
-  ---
-  - hosts: apache
-    sudo: yes
-    tasks:
-      - name: install apache2
-        apt: name=apache2 update_cache=yes state=latest
+---
+- name: Install Apache
+  hosts: all
+  become: yes  # This allows Ansible to become root on the target machine
+
+  tasks:
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+
+    - name: Install Apache
+      apt:
+        name: apache2
+        state: present  # Ensure Apache is installed
